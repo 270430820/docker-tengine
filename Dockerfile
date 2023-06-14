@@ -49,8 +49,8 @@ ENV CONFIG "\
         --with-http_v2_module \
         --add-module=modules/ngx_http_upstream_check_module \
         --add-module=modules/headers-more-nginx-module-0.33 \
-		--add-module=modules/ngx_http_upstream_session_sticky_module \
-		--add-dynamic-module=/usr/src/ngx_http_geoip2_module-$GEOIP2_MODULE_VERSION \
+        --add-module=modules/ngx_http_upstream_session_sticky_module \
+        --add-dynamic-module=/usr/src/ngx_http_geoip2_module-$GEOIP2_MODULE_VERSION \
         "
 RUN     addgroup -S nginx \
         && adduser -D -S -h /var/cache/nginx -s /sbin/nologin -G nginx nginx \
@@ -135,18 +135,8 @@ RUN     addgroup -S nginx \
         && ln -sf /dev/stderr /var/log/nginx/error.log
 
 COPY conf/nginx.conf /etc/nginx/nginx.conf
-
-## disabled due to license changes (to fix in next release)
-# Add GeoLite2 databases (https://dev.maxmind.com/geoip/geoip2/geolite2/)
-#RUN curl -fSL http://geolite.maxmind.com/download/geoip/database/GeoLite2-City.mmdb.gz -o /etc/nginx/GeoLite2-City.mmdb.gz \
-#    && curl -fSL http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country.mmdb.gz -o /etc/nginx/GeoLite2-Country.mmdb.gz \
-#    && gunzip /etc/nginx/GeoLite2-City.mmdb.gz \
-#    && gunzip /etc/nginx/GeoLite2-Country.mmdb.gz
-#COPY geoip2db/GeoLite2-City.mmdb /etc/nginx/geoip2db/GeoLite2-City.mmdb
-#COPY geoip2db/GeoLite2-Country.mmdb /etc/nginx/geoip2db/GeoLite2-Country.mmdb
-#COPY geoip2db/GeoLite2-ASN.mmdb /etc/nginx/geoip2db/GeoLite2-ASN.mmdb
-COPY geoip2db/ /etc/nginx/geoip2db/
 COPY conf/geoip2.conf /etc/nginx/geoip2.conf
+COPY geoip2db/ /etc/nginx/geoip2db/
 
 EXPOSE 80 443
 
