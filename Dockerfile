@@ -134,7 +134,7 @@ RUN     addgroup -S nginx \
         && ln -sf /dev/stdout /var/log/nginx/access.log \
         && ln -sf /dev/stderr /var/log/nginx/error.log
 
-COPY nginx.conf /etc/nginx/nginx.conf
+COPY conf/nginx.conf /etc/nginx/nginx.conf
 
 ## disabled due to license changes (to fix in next release)
 # Add GeoLite2 databases (https://dev.maxmind.com/geoip/geoip2/geolite2/)
@@ -146,7 +146,7 @@ COPY nginx.conf /etc/nginx/nginx.conf
 #COPY geoip2db/GeoLite2-Country.mmdb /etc/nginx/geoip2db/GeoLite2-Country.mmdb
 #COPY geoip2db/GeoLite2-ASN.mmdb /etc/nginx/geoip2db/GeoLite2-ASN.mmdb
 COPY geoip2db/ /etc/nginx/geoip2db/
-COPY geoip2.conf /etc/nginx/geoip2.conf
+COPY conf/geoip2.conf /etc/nginx/geoip2.conf
 
 EXPOSE 80 443
 
